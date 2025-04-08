@@ -1,9 +1,37 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+categories = [
+  { name: 'Casual', description: 'Everyday comfortable t-shirts' },
+  { name: 'Sports', description: 'Athletic performance t-shirts' },
+  { name: 'Graphic', description: 'T-shirts with printed designs' },
+  { name: 'Premium', description: 'High-quality luxury t-shirts' }
+]
+
+categories.each do |category_attrs|
+  Category.find_or_create_by!(name: category_attrs[:name]) do |category|
+    category.description = category_attrs[:description]
+  end
+end
+
+TShirt.create(
+        name: "T-Shirt 1", 
+        description: "This is the first T-Shirt", 
+        size: "M", 
+        price: 19.99,
+        category: Category.find_by(name: 'Casual'),
+        image_url: 'images/nigger.jpg'
+    )
+
+TShirt.create(
+        name: "T-Shirt 2", 
+        description: "This is the second T-Shirt", 
+        size: "L", 
+        price: 24.99,
+        category: Category.find_by(name: 'Sports')
+    )
+
+TShirt.create(
+        name: "T-Shirt 3", 
+        description: "This is the third T-Shirt", 
+        size: "XL", 
+        price: 29.99,
+        category: Category.find_by(name: 'Graphic')
+    )
