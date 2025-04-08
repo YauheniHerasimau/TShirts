@@ -1,0 +1,10 @@
+<h1>T-Shirts</h1>
+
+<% @t_shirts.each do |t_shirt| %>
+  <%= link_to t_shirt_path(t_shirt) do %>
+    <div class="catalog">
+      <p><%= t_shirt.name %></p>
+      <img class="catalog-image" src="<%= t_shirt.image_url %>" alt="<%= t_shirt.name %>">
+    </div>
+  <% end %>
+<% end %>
