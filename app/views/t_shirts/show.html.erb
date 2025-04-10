@@ -5,3 +5,4 @@
     <p>Price: $<%= @t_shirt.price %></p>
     <p>Size: <%= @t_shirt.size %></p>
 </div>
+<%= button_to "Add to Cart", cart_items_path(t_shirt_id: @t_shirt.id) %>

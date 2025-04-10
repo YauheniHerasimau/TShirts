@@ -29,6 +29,18 @@
           <i>Hello, </i> <%= current_user.name || current_user.email %>
           <div>
             <%= link_to "My Account", edit_user_registration_path %>
+
+            <%= link_to cart_path do %>
+              <% if session[:cart_id] %>
+                <% cart = Cart.find_by(id: session[:cart_id]) %>
+                <% if cart && cart.cart_items.any? %>
+                  <%= cart.total_items %>
+                <% end %>
+              <% else %>
+                <%= link_to "Cart", cart_path %>
+              <% end %>
+            <% end %>
+
             <% if current_user.admin? %>
               <%= link_to "Admin Dashboard", admin_index_path %>
             <% end %>

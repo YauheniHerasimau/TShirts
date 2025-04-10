@@ -1,0 +1,55 @@
+<div>
+  <h1>Your Cart</h1>
+  
+  <% if @cart.cart_items.empty? %>
+    <p>Your cart is empty</p>
+  <% else %>
+    <table>
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @cart.cart_items.each do |item| %>
+          <tr>
+            <td>
+              <%= item.t_shirt.name %>
+            </td>
+            <td>
+              <%= number_to_currency(item.t_shirt.price) %>
+            </td>
+            <td>
+              <%= form_with(model: item, local: true) do |f| %>
+                <%= f.number_field :quantity, min: 1, value: item.quantity %>
+                <%= f.submit "Update" %>
+              <% end %>
+            </td>
+            <td>
+              <%= number_to_currency(item.total_price) %>
+            </td>
+            <td>
+              <%= button_to "Remove", cart_item_path(item), method: :delete %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3"><strong>Total:</strong></td>
+          <td><strong><%= number_to_currency(@cart.total_price) %></strong></td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+    
+    <div>
+      <%= link_to "Continue Shopping", t_shirts_path %>
+      <%= button_to "Empty Cart", cart_path, method: :delete %>
+    </div>
+  <% end %>
+</div>
