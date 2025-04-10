@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
+  devise_for :users
 
+  get "admin/index"
+  namespace :admin do
+    resources :t_shirts
+    resources :categories
+    resources :users, only: [:index, :show, :edit, :update]
+  end
+  
   root "t_shirts#index"
   resources :t_shirts
 

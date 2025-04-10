@@ -1,3 +1,11 @@
+User.create(
+  email: 'milko.gera@gmail.com',
+  password: '14886663',
+  password_confirmation: '14886663',
+  admin: true,
+  name: 'Admin'
+)
+
 categories = [
   { name: 'Casual', description: 'Everyday comfortable t-shirts' },
   { name: 'Sports', description: 'Athletic performance t-shirts' },

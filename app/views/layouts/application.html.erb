@@ -23,6 +23,23 @@
   </head>
 
   <body>
+    <div>
+      <% if user_signed_in? %>
+        <div>
+          <i>Hello, </i> <%= current_user.name || current_user.email %>
+          <div>
+            <%= link_to "My Account", edit_user_registration_path %>
+            <% if current_user.admin? %>
+              <%= link_to "Admin Dashboard", admin_index_path %>
+            <% end %>
+            <%= button_to "Sign Out", destroy_user_session_path, method: :delete %>
+          </div>
+        </div>
+      <% else %>
+        <%= button_to "Sign In", new_user_session_path, method: :get %>
+        <%= button_to "Register", new_user_registration_path, method: :get %>
+      <% end %>
+    </div>
     <%= yield %>
   </body>
 </html>
