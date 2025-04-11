@@ -1,10 +1,41 @@
-<h1>T-Shirts</h1>
+<div class="hero-section">
+  <div>
+    <h1>Discover Your Perfect T-Shirt</h1>
+    <p>Unique designs, premium quality, and unbeatable comfort</p>
+  </div>
+</div>
 
-<% @t_shirts.each do |t_shirt| %>
-  <%= link_to t_shirt_path(t_shirt) do %>
-    <div class="catalog">
-      <p><%= t_shirt.name %></p>
-      <img class="catalog-image" src="<%= t_shirt.image_url %>" alt="<%= t_shirt.name %>">
+<div>
+  <div>
+    <div class="t-shirts-grid">
+      <% @t_shirts.each do |t_shirt| %>
+        <%= link_to t_shirt_path(t_shirt) do %>
+          <div class="t-shirt-card">
+            <div class="t-shirt-image">
+              <img src="<%= t_shirt.image_url %>" alt="<%= t_shirt.name %>">
+            </div>
+            
+            <div class="t-shirt-info">
+              <h3 class="t-shirt-name"><%= t_shirt.name %></h3>
+              
+              <div class="t-shirt-meta">
+                <% if t_shirt.category.present? %>
+                  <span class="t-shirt-category"><%= t_shirt.category.name %></span>
+                <% end %>
+              </div>
+              
+              <div class="t-shirt-price">
+                <%= number_to_currency(t_shirt.price) %>
+              </div>
+
+              <div>
+                <%= button_to "Add to Cart", cart_items_path(t_shirt_id: t_shirt), method: :post %>
+              </div>
+
+            </div>
+          </div>
+        <% end %>
+      <% end %>
     </div>
-  <% end %>
-<% end %>
+  </div>
+</div>

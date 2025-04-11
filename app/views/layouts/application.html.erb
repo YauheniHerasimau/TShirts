@@ -23,10 +23,10 @@
   </head>
 
   <body>
-    <div>
-      <% if user_signed_in? %>
-        <div>
-          <i>Hello, </i> <%= current_user.name || current_user.email %>
+    <div class="header">
+      <div class="header-content">
+        <% if user_signed_in? %>
+          <i>Hello,</i> <%= current_user.name || current_user.email %>
           <div>
             <%= link_to "My Account", edit_user_registration_path %>
 
@@ -46,11 +46,12 @@
             <% end %>
             <%= button_to "Sign Out", destroy_user_session_path, method: :delete %>
           </div>
-        </div>
       <% else %>
         <%= button_to "Sign In", new_user_session_path, method: :get %>
         <%= button_to "Register", new_user_registration_path, method: :get %>
       <% end %>
+      </div>
+      <%= button_to "Home", root_path, method: :get %>
     </div>
     <%= yield %>
   </body>

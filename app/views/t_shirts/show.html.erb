@@ -1,8 +1,18 @@
+<h1><%= @t_shirt.name %></h1>
+
 <div class="catalog">
-    <h1><%= @t_shirt.name %></h1>
-    <img  src="<%= @t_shirt.image_url %>" alt="<%= @t_shirt.name %>">
-    <p><%= @t_shirt.description %></p>
-    <p>Price: $<%= @t_shirt.price %></p>
-    <p>Size: <%= @t_shirt.size %></p>
+    <div>
+        <img src="<%= @t_shirt.image_url %>" alt="<%= @t_shirt.name %>">
+    </div>
+    <div>
+        <p><%= @t_shirt.description %></p>
+    </div>
+    <div>
+        <p>Price: $<%= @t_shirt.price %></p>
+    </div>
+    <div>
+        <p>Size: <%= @t_shirt.size %></p>
+    </div>
+
 </div>
 <%= button_to "Add to Cart", cart_items_path(t_shirt_id: @t_shirt.id) %>

@@ -33,7 +33,8 @@ TShirt.create(
         description: "This is the second T-Shirt", 
         size: "L", 
         price: 24.99,
-        category: Category.find_by(name: 'Sports')
+        category: Category.find_by(name: 'Sports'),
+        image_url: 'images/ts2.jpg'
     )
 
 TShirt.create(
@@ -41,5 +42,6 @@ TShirt.create(
         description: "This is the third T-Shirt", 
         size: "XL", 
         price: 29.99,
-        category: Category.find_by(name: 'Graphic')
+        category: Category.find_by(name: 'Graphic'),
+        image_url: 'images/ts3.jpg'
     )
