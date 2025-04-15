@@ -1,2 +1,56 @@
-<h1>Admin#index</h1>
-<p>Find me in app/views/admin/index.html.erb</p>
+
+<body>
+  <div> 
+    <div>
+      <main>
+        <h2>Create New T-Shirt</h2>
+        
+        <%= form_with(url: admin_t_shirts_path, method: :post, local: true, multipart: true) do |f| %>
+          <div>
+            <%= f.label :name %>
+            <%= f.text_field :name, required: true %>
+          </div>
+          
+          <div>
+            <%= f.label :description, "Description" %>
+            <%= f.text_area :description %>
+          </div>
+          
+          <div>
+            <%= f.label :price, "Price" %>
+            <%= f.number_field :price, step: 0.01, min: 0, required: true %>
+          </div>
+          
+          <% if defined?(Category) && Category.table_exists? && Category.any? %>
+            <div>
+              <%= f.label :category_id, "Category" %>
+              <%= f.collection_select :category_id, Category.all, :id, :name, { include_blank: "Select a category" } %>
+            </div>
+          <% end %>
+          
+          <div>
+            <%= f.label :image, "T-Shirt Image" %>
+            <%= f.file_field :image %>
+          </div>
+          
+          <div>
+            <%= f.submit "Create T-Shirt" %>
+          </div>
+        <% end %>
+        
+        <div>
+          <h2>Existing T-Shirts</h2>
+          
+          <% if @t_shirts && @t_shirts.any? %>
+            <% @t_shirts.each do |t_shirt| %>
+              <%= t_shirt.name %>
+              <%= number_to_currency(t_shirt.price) %>
+              <%= link_to "View", t_shirt_path(t_shirt) %>
+              <%= link_to "Edit" %>
+              <%= button_to "Delete", t_shirt_path(t_shirt), method: :delete %>
+            <% end %>
+          <% end %>
+        </div>
+      </main>
+    </div>
+  </div>

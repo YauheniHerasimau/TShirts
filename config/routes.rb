@@ -3,9 +3,10 @@ Rails.application.routes.draw do
 
   get "admin/index"
   namespace :admin do
-    resources :t_shirts
-    resources :categories
-    resources :users, only: [:index, :show, :edit, :update]
+    get "t_shirts/index"
+    get "t_shirts/create"
+    root to: 't_shirts#index'
+    resources :t_shirts, only: [:index, :new, :create, :edit, :update, :destroy]
   end
   
   root "t_shirts#index"
