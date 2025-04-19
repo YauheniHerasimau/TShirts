@@ -1,0 +1,35 @@
+<h1>Edit T-shirt</h1>
+
+<%= form_with(url: root_path, method: :get) do |form| %>
+
+  <div>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :description %>
+    <%= form.text_area :description, rows: 3 %>
+  </div>
+
+  <div>
+    <%= form.label :price %>
+    <%= form.number_field :price, step: "0.01", min: 0 %>
+  </div>
+
+  <div>
+    <% if @t_shirt.image_url.present? %>
+      <div>
+        <p>Current image:</p>
+        <img src="<%= @t_shirt.image_url %>" alt="<%= @t_shirt.name %>" width="100">
+      </div>
+    <% end %>
+    
+    <%= form.label :image, "Change image" %>
+    <%= form.file_field :image %>
+  </div>
+
+  <div>
+    <%= form.submit "Update T-shirt" %>
+  </div>
+<% end %>
