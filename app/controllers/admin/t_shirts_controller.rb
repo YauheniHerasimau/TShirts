@@ -38,6 +38,12 @@ module Admin
     def edit
       @t_shirt = TShirt.find(params[:id])
     end
+
+    def update
+      @t_shirt = TShirt.find(params[:id])
+      @t_shirt.update(t_shirt_params)
+      redirect_to admin_index_path
+    end
     
     private
     

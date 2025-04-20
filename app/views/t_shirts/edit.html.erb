@@ -1,6 +1,6 @@
-<h1>Edit T-shirt</h1>
+<h1>Edit T-shirt: <%= @t_shirt.name %></h1>
 
-<%= form_with(url: root_path, method: :get) do |form| %>
+<%= form_with(model: @t_shirt, url: t_shirt_path(@t_shirt), method: :patch) do |form| %>
 
   <div>
     <%= form.label :name %>
