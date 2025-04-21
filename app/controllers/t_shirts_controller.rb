@@ -6,6 +6,9 @@ class TShirtsController < ApplicationController
 
     def show
         @t_shirt = TShirt.visible.find(params[:id])
+
+        @opinions = @t_shirt.opinions
+        @opinion = Opinion.new
     end
 
     def destroy

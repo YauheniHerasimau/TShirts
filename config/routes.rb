@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "opinions/create"
   devise_for :users
 
   get "admin/index"
@@ -11,11 +12,14 @@ Rails.application.routes.draw do
         patch :toggle_hidden
         get :toggle_hidden
       end
+      resources :opinions, only: [:create, :destroy]
     end
   end
   
   root "t_shirts#index"
-  resources :t_shirts
+  resources :t_shirts do
+    resources :opinions, only: [:create]
+  end
 
   resources :cart_items, only: [:create, :update, :destroy]
   resource :cart, only: [:show, :destroy]

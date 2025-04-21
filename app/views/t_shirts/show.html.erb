@@ -16,3 +16,30 @@
 
 </div>
 <%= button_to "Add to Cart", cart_items_path(t_shirt_id: @t_shirt.id) %>
+
+<div>
+    <%= form_with(model: [@t_shirt, Opinion.new], local: true) do |form| %>
+        <div>
+            <%= form.label :content %>
+            <%= form.text_area :content %>
+        </div>
+
+        <div>
+            <%= form.label :rating %>
+            <%= form.number_field :rating, in: 1..5 %>
+        </div>
+        <div>
+            <%= form.submit "Add Opinion" %>
+        </div>
+    <% end %>
+
+    <% if @t_shirt.opinions.any? %>
+        <h2>Opinions:</h2>
+        <% @t_shirt.opinions.each do |opinion| %>
+            <div>
+                <p><%= opinion.content %></p>
+                <p>Rating: <%= opinion.rating %></p>
+            </div>
+        <% end %>
+    <% end %>
+</div>
