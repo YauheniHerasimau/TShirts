@@ -5,7 +5,7 @@ class TShirtsController < ApplicationController
     end
 
     def show
-        @t_shirt = TShirt.find(params[:id])
+        @t_shirt = TShirt.visible.find(params[:id])
     end
 
     def destroy

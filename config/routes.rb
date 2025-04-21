@@ -6,7 +6,12 @@ Rails.application.routes.draw do
     get "t_shirts/index"
     get "t_shirts/create"
     root to: 't_shirts#index'
-    resources :t_shirts
+    resources :t_shirts do
+      member do
+        patch :toggle_hidden
+        get :toggle_hidden
+      end
+    end
   end
   
   root "t_shirts#index"

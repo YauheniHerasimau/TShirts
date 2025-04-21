@@ -53,6 +53,8 @@
               <%= link_to "View", t_shirt_path(t_shirt) %>
               <%= link_to "Edit", edit_t_shirt_path(t_shirt) %>
               <%= button_to "Delete", t_shirt_path(t_shirt), method: :delete %>
+              <%= link_to t_shirt.hidden ? "Show" : "Hide", toggle_hidden_admin_t_shirt_path(t_shirt), method: :patch %>
+              <hr>
             <% end %>
           <% end %>
         </div>

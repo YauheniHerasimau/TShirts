@@ -1,11 +1,25 @@
 module Admin
   class TShirtsController < BaseController
+    before_action :set_t_shirt, only: [:show, :edit, :update, :destroy, :toggle_hidden]
     def index
-      @t_shirts = TShirt.all.order(created_at: :desc)
+      case params[:filter]
+      when "hidden"
+        @t_shirts = TShirt.hidden.order(created_at: :desc)
+      when "visible"
+        @t_shirts = TShirt.visible.order(created_at: :desc)
+      else
+        @t_shirts = TShirt.visible.order(created_at: :desc)
+      end
     end
     
     def new
       @t_shirt = TShirt.new
+    end
+
+    def show
+    end
+
+    def edit
     end
     
     def create
@@ -44,11 +58,20 @@ module Admin
       @t_shirt.update(t_shirt_params)
       redirect_to admin_index_path
     end
+
+    def toggle_hidden
+      @t_shirt.update(hidden: !@t_shirt.hidden)
+      redirect_back(fallback_location: admin_t_shirts_path)
+    end
     
     private
     
     def t_shirt_params
-      params.require(:t_shirt).permit(:name, :description, :price, :category_id, :image_url, :size)
+      params.require(:t_shirt).permit(:name, :description, :price, :category_id, :image_url, :size, :hidden)
+    end
+
+    def set_t_shirt
+      @t_shirt = TShirt.find(params[:id])
     end
   end
 end
