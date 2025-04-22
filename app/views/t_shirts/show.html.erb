@@ -1,45 +1,81 @@
-<h1><%= @t_shirt.name %></h1>
-
-<div class="catalog">
-    <div>
-        <img src="<%= @t_shirt.image_url %>" alt="<%= @t_shirt.name %>">
-    </div>
-    <div>
-        <p><%= @t_shirt.description %></p>
-    </div>
-    <div>
-        <p>Price: $<%= @t_shirt.price %></p>
-    </div>
-    <div>
-        <p>Size: <%= @t_shirt.size %></p>
-    </div>
-
-</div>
-<%= button_to "Add to Cart", cart_items_path(t_shirt_id: @t_shirt.id) %>
-
 <div>
-    <%= form_with(model: [@t_shirt, Opinion.new], local: true) do |form| %>
-        <div>
-            <%= form.label :content %>
-            <%= form.text_area :content %>
-        </div>
-
-        <div>
-            <%= form.label :rating %>
-            <%= form.number_field :rating, in: 1..5 %>
-        </div>
-        <div>
-            <%= form.submit "Add Opinion" %>
-        </div>
+  <h1><%= @t_shirt.name %></h1>
+  
+  <div>
+    <% if @t_shirt.image_url.present? %>
+      <img src="<%= @t_shirt.image_url %>" alt="<%= @t_shirt.name %>" width="300">
     <% end %>
-
-    <% if @t_shirt.opinions.any? %>
-        <h2>Opinions:</h2>
-        <% @t_shirt.opinions.each do |opinion| %>
+  </div>
+  
+  <div>
+    <p><strong>Price:</strong> $<%= sprintf('%.2f', @t_shirt.price) %></p>
+    <p><strong>Color:</strong></p>
+    <p><strong>Description:</strong> <%= @t_shirt.description %></p>
+    
+    <% if @t_shirt.average_rating > 0 %>
+      <p>
+        <strong>Average Rating:</strong>
+        <%= @t_shirt.average_rating %>/5
+        (<%= @t_shirt.opinions.count %> <%= 'review'.pluralize(@t_shirt.opinions.count) %>)
+      </p>
+    <% end %>
+  </div>
+  
+  <hr>
+  
+  <div>
+    <h2>Customer Reviews</h2>
+    
+    <div>
+      <% if user_signed_in? && !@t_shirt.opinions.where(user_id: current_user.id).exists? %>
+        <h3>Write a Review</h3>
+        <%= form_with(model: [@t_shirt, @opinion], local: true) do |form| %>
             <div>
-                <p><%= opinion.content %></p>
-                <p>Rating: <%= opinion.rating %></p>
+            <%= form.label current_user.name, "Your Name" %>
+            </div>
+
+            <div>
+            <%= form.label :rating, "Rating" %>
+            <div>
+                <% (1..5).each do |star| %>
+                <%= form.radio_button :rating, star, checked: flash[:opinion_data]&.dig('rating').to_i == star %>
+                <%= label_tag "opinion_rating_#{star}", "#{star} #{'star'.pluralize(star)}" %>
+                <% end %>
+            </div>
+            </div>
+            
+            <div>
+            <%= form.label :content, "Your Review" %>
+            <%= form.text_area :content, rows: 5, value: flash[:opinion_data]&.dig('content') %>
+            </div>
+            
+            <div>
+            <%= form.submit "Submit Review" %>
             </div>
         <% end %>
-    <% end %>
+      <% end %>
+    </div>
+    
+    <hr>
+    
+
+    <div>
+      <% if @opinions.any? %>
+        <% @opinions.each do |opinion| %>
+          <div style="margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
+            <div>
+              <strong><%= opinion.user.name %></strong>
+              <span>Rating: <%= opinion.rating %>/5</span>
+              <small><%= opinion.created_at.strftime("%B %d, %Y") %></small>
+            </div>
+            <div>
+              <%= simple_format(opinion.content) %>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <p>No reviews yet. Be the first to review this product!</p>
+      <% end %>
+    </div>
+  </div>
 </div>

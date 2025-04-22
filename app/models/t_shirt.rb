@@ -2,7 +2,7 @@ class TShirt < ApplicationRecord
   belongs_to :category
   has_many :cart_items
   has_many :carts, through: :cart_items
-  has_many :opinions
+  has_many :opinions, dependent: :destroy
 
   validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
 

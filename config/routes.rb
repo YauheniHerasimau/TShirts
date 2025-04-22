@@ -1,12 +1,10 @@
 Rails.application.routes.draw do
-  get "opinions/create"
   devise_for :users
 
   get "admin/index"
   namespace :admin do
-    get "t_shirts/index"
     get "t_shirts/create"
-    root to: 't_shirts#index'
+
     resources :t_shirts do
       member do
         patch :toggle_hidden
@@ -17,7 +15,8 @@ Rails.application.routes.draw do
   end
   
   root "t_shirts#index"
-  resources :t_shirts do
+
+  resources :t_shirts, onli: [:index, :show] do
     resources :opinions, only: [:create]
   end
 

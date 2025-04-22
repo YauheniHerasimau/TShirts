@@ -1,14 +1,17 @@
 class TShirtsController < ApplicationController
 
     def index
-        @t_shirts = TShirt.all
+        @t_shirts = TShirt.where(hidden: false).order(created_at: :desc)
     end
 
     def show
         @t_shirt = TShirt.visible.find(params[:id])
 
         @opinions = @t_shirt.opinions
-        @opinion = Opinion.new
+        @opinion = Opinion.create
+
+    rescue ActiveRecord::RecordNotFound
+        redirect_to root_path
     end
 
     def destroy
