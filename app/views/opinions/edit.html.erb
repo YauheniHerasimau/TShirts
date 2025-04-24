@@ -1,0 +1,25 @@
+<div>
+  <h1>Edit Your Review for <%= @t_shirt.name %></h1>
+  
+  <%= form_with(model: [@t_shirt, @opinion], local: true) do |form| %>
+    <div>
+      <%= form.label :rating, "Rating" %>
+      <div>
+        <% (1..5).each do |star| %>
+          <%= form.radio_button :rating, star %>
+          <%= label_tag "opinion_rating_#{star}", "#{star} #{'star'.pluralize(star)}" %>
+        <% end %>
+      </div>
+    </div>
+    
+    <div>
+      <%= form.label :content, "Your Review" %>
+      <%= form.text_area :content, rows: 5 %>
+    </div>
+    
+    <div>
+      <%= form.submit "Update Review" %>
+      <%= link_to "Cancel", t_shirt_path(@t_shirt) %>
+    </div>
+  <% end %>
+</div>

@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   root "t_shirts#index"
 
   resources :t_shirts, onli: [:index, :show] do
-    resources :opinions, only: [:create]
+    resources :opinions, only: [:create, :destroy, :update, :edit]
   end
 
   resources :cart_items, only: [:create, :update, :destroy]

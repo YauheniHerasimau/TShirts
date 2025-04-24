@@ -72,6 +72,14 @@
               <%= simple_format(opinion.content) %>
             </div>
           </div>
+
+          <% if user_signed_in? && opinion.user == current_user %>
+            <div style="float: right;">
+                <%= link_to "Edit", edit_t_shirt_opinion_path(@t_shirt, opinion) %>
+                <%= button_to "Delete", t_shirt_opinion_path(@t_shirt, opinion), method: :delete %>
+            </div>
+          <% end %>
+
         <% end %>
       <% else %>
         <p>No reviews yet. Be the first to review this product!</p>
