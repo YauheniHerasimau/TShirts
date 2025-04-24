@@ -1,24 +1,37 @@
-<div>
+<div class="t-shirt-detail">
+
+  <div class="back-link">
+    <%= link_to "← Back to T-shirts", t_shirts_path %>
+  </div>
+
   <h1><%= @t_shirt.name %></h1>
   
-  <div>
-    <% if @t_shirt.image_url.present? %>
-      <img src="<%= @t_shirt.image_url %>" alt="<%= @t_shirt.name %>" width="300">
-    <% end %>
+  <div class="t-shirt-image-large">
+      <img src="<%= @t_shirt.image_url %>" alt="<%= @t_shirt.name %>">
   </div>
   
   <div>
     <p><strong>Price:</strong> $<%= sprintf('%.2f', @t_shirt.price) %></p>
     <p><strong>Color:</strong></p>
     <p><strong>Description:</strong> <%= @t_shirt.description %></p>
-    
-    <% if @t_shirt.average_rating > 0 %>
-      <p>
-        <strong>Average Rating:</strong>
-        <%= @t_shirt.average_rating %>/5
-        (<%= @t_shirt.opinions.count %> <%= 'review'.pluralize(@t_shirt.opinions.count) %>)
-      </p>
-    <% end %>
+    <div>
+        <% if @t_shirt.average_rating > 0 %>
+        <p>
+            <strong>Average Rating:</strong>
+            <span class="stars-large">
+
+                <% @t_shirt.average_rating.round.times do %>
+                    ★
+                <% end %>
+
+                <% (5 - @t_shirt.average_rating.round).times do %>
+                    ☆
+                <% end %>
+            </span>
+            (<%= @t_shirt.opinions.count %> <%= 'review'.pluralize(@t_shirt.opinions.count) %>)
+        </p>
+        <% end %>
+    </div>
   </div>
   
   <hr>
@@ -30,27 +43,23 @@
       <% if user_signed_in? && !@t_shirt.opinions.where(user_id: current_user.id).exists? %>
         <h3>Write a Review</h3>
         <%= form_with(model: [@t_shirt, @opinion], local: true) do |form| %>
-            <div>
-            <%= form.label current_user.name, "Your Name" %>
-            </div>
 
             <div>
-            <%= form.label :rating, "Rating" %>
-            <div>
-                <% (1..5).each do |star| %>
-                <%= form.radio_button :rating, star, checked: flash[:opinion_data]&.dig('rating').to_i == star %>
-                <%= label_tag "opinion_rating_#{star}", "#{star} #{'star'.pluralize(star)}" %>
-                <% end %>
-            </div>
-            </div>
-            
-            <div>
-            <%= form.label :content, "Your Review" %>
-            <%= form.text_area :content, rows: 5, value: flash[:opinion_data]&.dig('content') %>
+                <%= form.label :rating, "Rating" %>
+                <div class="rating-stars">
+                    <% (1..5).each do |star| %>
+                      <%= form.radio_button :rating, checked: flash[:opinion_data]&.dig('rating').to_i == star %>
+                    <% end %>
+                </div>
             </div>
             
             <div>
-            <%= form.submit "Submit Review" %>
+                <%= form.label :content, "Your Review" %>
+                <%= form.text_area :content, rows: 5, value: flash[:opinion_data]&.dig('content') %>
+            </div>
+            
+            <div>
+                <%= form.submit "Submit Review" %>
             </div>
         <% end %>
       <% end %>
@@ -62,8 +71,8 @@
     <div>
       <% if @opinions.any? %>
         <% @opinions.each do |opinion| %>
-          <div style="margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
-            <div>
+          <div class="review-card">
+            <div class="review-header">
               <strong><%= opinion.user.name %></strong>
               <span>Rating: <%= opinion.rating %>/5</span>
               <small><%= opinion.created_at.strftime("%B %d, %Y") %></small>
@@ -74,13 +83,13 @@
           </div>
 
           <% if user_signed_in? && opinion.user == current_user %>
-            <div style="float: right;">
+            <div>
                 <%= link_to "Edit", edit_t_shirt_opinion_path(@t_shirt, opinion) %>
-                <%= button_to "Delete", t_shirt_opinion_path(@t_shirt, opinion), method: :delete %>
+                <div class="back-button"><%= button_to "Delete", t_shirt_opinion_path(@t_shirt, opinion), method: :delete %></div>
             </div>
           <% end %>
-
         <% end %>
+        <hr>
       <% else %>
         <p>No reviews yet. Be the first to review this product!</p>
       <% end %>

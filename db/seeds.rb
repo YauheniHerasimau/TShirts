@@ -6,6 +6,30 @@ User.create(
   name: 'Admin'
 )
 
+User.create(
+  email: 'example1@user.com',
+  password: '123456',
+  password_confirmation: '123456',
+  admin: false,
+  name: 'User'
+)
+
+User.create(
+  email: 'example2@user.com',
+  password: '123456',
+  password_confirmation: '123456',
+  admin: false,
+  name: 'User2'
+)
+
+User.create(
+  email: 'example3@user.com',
+  password: '123456',
+  password_confirmation: '123456',
+  admin: false,
+  name: 'User3'
+)
+
 categories = [
   { name: 'Casual', description: 'Everyday comfortable t-shirts' },
   { name: 'Sports', description: 'Athletic performance t-shirts' },
@@ -44,4 +68,31 @@ TShirt.create(
         price: 29.99,
         category: Category.find_by(name: 'Graphic'),
         image_url: 'images/ts3.jpg'
+    )
+
+TShirt.create(
+        name: "T-Shirt 4", 
+        description: "This is the fourth T-Shirt", 
+        size: "S", 
+        price: 14.99,
+        category: Category.find_by(name: 'Premium'),
+        image_url: 'images/ts4.jpg'
+    )
+
+TShirt.create(
+        name: "T-Shirt 5", 
+        description: "This is the fifth T-Shirt", 
+        size: "S", 
+        price: 14.99,
+        category: Category.find_by(name: 'Premium'),
+        image_url: 'images/ts5.jpg'
+    )
+
+TShirt.create(
+        name: "T-Shirt 6", 
+        description: "This is the sixth T-Shirt", 
+        size: "S", 
+        price: 14.99,
+        category: Category.find_by(name: 'Premium'),
+        image_url: 'images/ts6.jpg'
     )
