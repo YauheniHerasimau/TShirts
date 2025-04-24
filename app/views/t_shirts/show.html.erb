@@ -44,13 +44,13 @@
         <h3>Write a Review</h3>
         <%= form_with(model: [@t_shirt, @opinion], local: true) do |form| %>
 
-            <div>
+            <div class="rating-stars">
                 <%= form.label :rating, "Rating" %>
-                <div class="rating-stars">
-                    <% (1..5).each do |star| %>
-                      <%= form.radio_button :rating, checked: flash[:opinion_data]&.dig('rating').to_i == star %>
-                    <% end %>
-                </div>
+                <% (1..5).each do |star| %>
+                <%= form.radio_button :rating, star, checked: flash[:opinion_data]&.dig('rating').to_i == star %>
+                <%= label_tag "opinion_rating_#{star}", "#{star} #{'star'.pluralize(star)}" %>
+                <% end %>
+            </div>
             </div>
             
             <div>

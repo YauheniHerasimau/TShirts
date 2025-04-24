@@ -4,6 +4,7 @@ class OpinionsController < ApplicationController
   before_action :authorize_user!, only: [:edit, :update, :destroy]
   def create
     @t_shirt = TShirt.find(params[:t_shirt_id])
+
     @opinion = @t_shirt.opinions.new(opinion_params)
     @opinion.user = current_user
     if @opinion.save
