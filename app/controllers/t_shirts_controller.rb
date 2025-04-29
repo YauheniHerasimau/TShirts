@@ -1,7 +1,13 @@
 class TShirtsController < ApplicationController
 
     def index
-        @t_shirts = TShirt.where(hidden: false).order(created_at: :desc)
+        @categories = Category.all
+
+        if params[:category_id].present?
+            @t_shirts = TShirt.where(category_id: params[:category_id])
+        else
+            @t_shirts = TShirt.all.order(created_at: :desc)
+        end
     end
 
     def show

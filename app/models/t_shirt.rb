@@ -11,6 +11,7 @@ class TShirt < ApplicationRecord
 
   scope :visible, -> { where(hidden: false) }
   scope :hidden, -> { where(hidden: true) }
+  scope :by_category, ->(category_id) { where(category_id: category_id)  if category_id.present? } 
 
   COLORS = [
     'Black',
@@ -45,5 +46,11 @@ class TShirt < ApplicationRecord
       'Gray' => '#808080'
     }
     color_map[color] || '#000000'
+  end
+
+  def self.search(params)
+    t_shirts = all
+    t_shirts = t_shirts.where(category_id: params[:category_id]) if params[:category_id].present?
+    t_shirts
   end
 end
