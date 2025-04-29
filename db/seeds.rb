@@ -49,7 +49,8 @@ TShirt.create(
         size: "M", 
         price: 19.99,
         category: Category.find_by(name: 'Casual'),
-        image_url: 'images/nigger.jpg'
+        image_url: 'nigger.jpg',
+        color: 'Black'
     )
 
 TShirt.create(
@@ -58,7 +59,8 @@ TShirt.create(
         size: "L", 
         price: 24.99,
         category: Category.find_by(name: 'Sports'),
-        image_url: 'images/ts2.jpg'
+        image_url: 'ts2.jpg',
+        color: 'Red'
     )
 
 TShirt.create(
@@ -67,7 +69,8 @@ TShirt.create(
         size: "XL", 
         price: 29.99,
         category: Category.find_by(name: 'Graphic'),
-        image_url: 'images/ts3.jpg'
+        image_url: 'ts3.jpg',
+        color: 'Blue'
     )
 
 TShirt.create(
@@ -76,7 +79,8 @@ TShirt.create(
         size: "S", 
         price: 14.99,
         category: Category.find_by(name: 'Premium'),
-        image_url: 'images/ts4.jpg'
+        image_url: 'ts4.jpg',
+        color: 'Yellow'
     )
 
 TShirt.create(
@@ -85,7 +89,8 @@ TShirt.create(
         size: "S", 
         price: 14.99,
         category: Category.find_by(name: 'Premium'),
-        image_url: 'images/ts5.jpg'
+        image_url: 'ts5.jpg',
+        color: 'Blue'
     )
 
 TShirt.create(
@@ -94,5 +99,6 @@ TShirt.create(
         size: "S", 
         price: 14.99,
         category: Category.find_by(name: 'Premium'),
-        image_url: 'images/ts6.jpg'
+        image_url: 'ts6.jpg',
+        color: 'Green'
     )

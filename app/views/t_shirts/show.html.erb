@@ -7,13 +7,15 @@
   <h1><%= @t_shirt.name %></h1>
   
   <div class="t-shirt-image-large">
-      <img src="<%= @t_shirt.image_url %>" alt="<%= @t_shirt.name %>">
+      <%= image_tag @t_shirt.image_url, alt: @t_shirt.name %>
   </div>
   
   <div>
     <p><strong>Price:</strong> $<%= sprintf('%.2f', @t_shirt.price) %></p>
-    <p><strong>Color:</strong></p>
+    <p><strong>Color:</strong> <%= @t_shirt.color %></p>
     <p><strong>Description:</strong> <%= @t_shirt.description %></p>
+    <p><strong>Category:</strong> <%= @t_shirt.category.name %></p>
+    <p><%= button_to "Add to Cart", cart_items_path(t_shirt_id: @t_shirt), method: :post %></p>
     <div>
         <% if @t_shirt.average_rating > 0 %>
         <p>

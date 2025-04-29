@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_21_191048) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_26_195445) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -82,6 +82,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_21_191048) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "hidden", default: false
+    t.string "available_sizes"
+    t.string "color"
     t.index ["category_id"], name: "index_t_shirts_on_category_id"
   end
 
@@ -99,6 +101,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_21_191048) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "variants", force: :cascade do |t|
+    t.integer "tshirt_id", null: false
+    t.string "color"
+    t.string "size"
+    t.integer "stock"
+    t.decimal "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tshirt_id"], name: "index_variants_on_tshirt_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "cart_items", "carts"
@@ -106,4 +119,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_21_191048) do
   add_foreign_key "opinions", "t_shirts"
   add_foreign_key "opinions", "users"
   add_foreign_key "t_shirts", "categories"
+  add_foreign_key "variants", "tshirts"
 end

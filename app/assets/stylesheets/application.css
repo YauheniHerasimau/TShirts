@@ -155,3 +155,9 @@ body {
     display: flex;
     align-items: center;
   }
+
+  .home-button {
+    float: left;
+    width: 100px;
+    margin-right: 10px;
+  }

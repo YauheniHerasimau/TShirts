@@ -34,6 +34,6 @@ class TShirtsController < ApplicationController
     private
 
     def t_shirt_params
-        params.require(:t_shirt).permit(:name, :description, :price, :category_id, :image_url, :size)
+        params.require(:t_shirt).permit(:name, :description, :price, :category_id, :image_url, :size, :color)
     end
 end
