@@ -12,6 +12,26 @@ class TShirt < ApplicationRecord
   scope :visible, -> { where(hidden: false) }
   scope :hidden, -> { where(hidden: true) }
   scope :by_category, ->(category_id) { where(category_id: category_id)  if category_id.present? } 
+  scope :by_color, ->(color) { where(color: color) if color.present? }
+
+  #Sorting/////////
+
+  scope :sorted_by, ->(sort_param) {
+    case sort_param
+    when 'price_asc'
+      order(price: :asc)
+    when 'price_desc'
+      order(price: :desc)
+    when 'newest'
+      order(created_at: :desc)
+    when 'oldest'
+      order(created_at: :asc)
+    else
+      all
+    end
+  }
+
+  #/Sorting////////
 
   COLORS = [
     'Black',

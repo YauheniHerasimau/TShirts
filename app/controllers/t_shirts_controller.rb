@@ -2,12 +2,23 @@ class TShirtsController < ApplicationController
 
     def index
         @categories = Category.all
+        @colors = TShirt::COLORS
+
+        @t_shirts = TShirt.visible
 
         if params[:category_id].present?
             @t_shirts = TShirt.where(category_id: params[:category_id])
         else
             @t_shirts = TShirt.all.order(created_at: :desc)
         end
+
+        if params[:color].present?
+            @t_shirts = @t_shirts.by_color(params[:color])
+        else
+            @t_shirts = @t_shirts.all.order(created_at: :desc)
+        end
+
+        @t_shirts = @t_shirts.sorted_by(params[:sort_by])
     end
 
     def show
