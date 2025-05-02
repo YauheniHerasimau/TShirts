@@ -26,6 +26,10 @@ class TShirt < ApplicationRecord
       order(created_at: :desc)
     when 'oldest'
       order(created_at: :asc)
+    when 'name_asc'
+      order(name: :asc)
+    when 'name_desc'
+      order(name: :desc)
     else
       all
     end
@@ -33,44 +37,33 @@ class TShirt < ApplicationRecord
 
   #/Sorting////////
 
-  COLORS = [
-    'Black',
-    'White',
-    'Red', 
-    'Blue', 
-    'Green', 
-    'Yellow', 
-    'Purple', 
-    'Pink', 
-    'Orange', 
-    'Gray'
-  ]
+  def self.search(params)
+    t_shirts = all
 
-  validates :color, inclusion: { in: COLORS }, allow_blank: true
+    t_shirts = t_shirts.where(category_id: params[:category_id]) if params[:category_id].present?
+    t_shirts = t_shirts.where(color: params[:color]) if params[:color].present?
+    
+    if params[:sorted_by].present?
+      case params[:sorted_by]
+      when 'price_asc'
+        t_shirts = t_shirts.order(price: :asc)
+      when 'price_desc'
+        t_shirts = t_shirts.order(price: :desc)
+      when 'newest'
+        t_shirts = t_shirts.order(created_at: :desc)
+      when 'oldest'
+        t_shirts = t_shirts.order(created_at: :asc)
+      when 'name_asc'
+        t_shirts = t_shirts.order(name: :asc)
+      when 'name_desc'
+        t_shirts = t_shirts.order(name: :desc)
+      end
+    end
+
+    t_shirts
+  end
 
   def average_rating
     opinions.average(:rating).to_f.round(1)
-  end
-
-  def color_hex
-    color_map = {
-      'Black' => '#000000',
-      'White' => '#ffffff',
-      'Red' => '#ff0000',
-      'Blue' => '#0000ff',
-      'Green' => '#00ff00',
-      'Yellow' => '#ffff00',
-      'Purple' => '#800080',
-      'Pink' => '#ffc0cb',
-      'Orange' => '#ffa500',
-      'Gray' => '#808080'
-    }
-    color_map[color] || '#000000'
-  end
-
-  def self.search(params)
-    t_shirts = all
-    t_shirts = t_shirts.where(category_id: params[:category_id]) if params[:category_id].present?
-    t_shirts
   end
 end

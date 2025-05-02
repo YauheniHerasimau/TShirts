@@ -4,38 +4,39 @@
     <p>Unique designs, premium quality, and unbeatable comfort</p>
   </div>
 </div>
-
 <div>
-  <%= form_with url: t_shirts_path, method: :get, local: true do |form| %>
+  <%= form_with(url: t_shirts_path, method: :get, local: true) do |form| %>
+  <div>
     <div>
+      <label>Category:</label>
       <%= form.select :category_id, options_from_collection_for_select(@categories, :id, :name, params[:category_id]),
-       { include_blank: 'All Categories' },
-       { class: "form-control", onchange: "this.form.submit()" } %>
+        include_blank: "All Categories" %>
     </div>
-  <% end %>
-
-  <%= form_with url: t_shirts_path, method: :get, local: true do |form| %>
+    
     <div>
-      <%= form.select :color, options_for_select(TShirt.pluck(:color).uniq, params[:color]),
-       { include_blank: 'All Colors' },
-       { class: "form-control", onchange: "this.form.submit()" } %>
+      <label>Color:</label>
+      <%= form.select :color, options_for_select(TShirt.pluck(:color).uniq, params[:color]), 
+        include_blank: "All Colors" %>
     </div>
-  <% end %>
 
-  <%= form_with url: t_shirts_path, method: :get, local: true do |form| %>
     <div>
-      <%= form.select :sort_by, options_for_select(
+      <label>Sort by:</label>
+      <%= form.select :sorted_by, options_for_select(
         [
           ['Price: Low to High', 'price_asc'],
           ['Price: High to Low', 'price_desc'],
           ['Newest', 'newest'],
-          ['Oldest', 'oldest']
+          ['Oldest', 'oldest'],
+          ['Name: A to Z', 'name_asc'],
+          ['Name: Z to A', 'name_desc']
         ],
-        params[:sort_by]
-      ),
-       { include_blank: 'Sort by' },
-       { class: "form-control", onchange: "this.form.submit()" } %>
+        params[:sorted_by]),
+        { include_blank: 'Sort by' } %>
+    
     </div>
+    
+    <%= form.submit "Apply Filters" %>
+  </div>
   <% end %>
 </div>
 
