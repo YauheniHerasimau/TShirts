@@ -1,0 +1,26 @@
+<%= link_to t_shirt_path(t_shirt) do %>
+    <div class="t-shirt-card <%= 't-shirt-hidden' if t_shirt.hidden && current_user.admin? %>">
+
+        <div class="t-shirt-image">
+            <%= image_tag t_shirt.image_url, alt: t_shirt.name %>
+        </div>
+        
+        <div class="t-shirt-info">
+            <h3 class="t-shirt-name"><%= t_shirt.name %></h3>
+        </div>
+        
+        <div>
+            <% if t_shirt.category.present? %>
+            <span class="t-shirt-category"><%= t_shirt.category.name %></span>
+            <% end %>
+        </div>
+        
+        <div class="t-shirt-price">
+            <%= number_to_currency(t_shirt.price) %>
+        </div>
+
+        <div>
+            <%= button_to "Add to Cart", cart_items_path(t_shirt_id: t_shirt), method: :post %>
+        </div>
+    </div>
+<% end %>

@@ -1,10 +1,12 @@
 class TShirtsController < ApplicationController
 
     def index
-        @categories = Category.all
+        if current_user && current_user.admin?
+            params[:admin_viev] = 'true'
+        end
 
-        #@t_shirts = TShirt.visible
         @t_shirts = TShirt.search(params)
+        @categories = Category.all
     end
 
     def show

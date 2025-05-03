@@ -14,31 +14,18 @@ class TShirt < ApplicationRecord
   scope :by_category, ->(category_id) { where(category_id: category_id)  if category_id.present? } 
   scope :by_color, ->(color) { where(color: color) if color.present? }
 
-  #Sorting/////////
-
-  scope :sorted_by, ->(sort_param) {
-    case sort_param
-    when 'price_asc'
-      order(price: :asc)
-    when 'price_desc'
-      order(price: :desc)
-    when 'newest'
-      order(created_at: :desc)
-    when 'oldest'
-      order(created_at: :asc)
-    when 'name_asc'
-      order(name: :asc)
-    when 'name_desc'
-      order(name: :desc)
-    else
-      all
-    end
-  }
-
-  #/Sorting////////
-
   def self.search(params)
-    t_shirts = all
+    if params[:admin_viev] == 'true'
+      t_shirts = all
+    else
+      t_shirts = where(hidden: false)
+    end
+
+    #Search bar/////////
+    if params[:search].present?
+      t_shirts = t_shirts.where("name LIKE ?", "%#{params[:search]}%")
+    end
+    #/Search bar////////
 
     t_shirts = t_shirts.where(category_id: params[:category_id]) if params[:category_id].present?
     t_shirts = t_shirts.where(color: params[:color]) if params[:color].present?

@@ -162,3 +162,7 @@ body {
     margin-right: 10px;
   }
   
+  .t-shirt-hidden{
+    border: 3px solid #e74c3c;
+    position: relative;
+  }
