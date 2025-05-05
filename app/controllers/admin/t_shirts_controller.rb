@@ -63,6 +63,12 @@ module Admin
       @t_shirt.update(hidden: !@t_shirt.hidden)
       redirect_back(fallback_location: admin_t_shirts_path)
     end
+
+    def update_stock
+      @t_shirt = TShirt.find(params[:id])
+      stock_change = params[:stock].to_i
+      @t_shirt.update(stock: @t_shirt.stock.to_i + stock_change)
+    end
     
     private
     

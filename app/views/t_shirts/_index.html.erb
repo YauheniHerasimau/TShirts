@@ -2,8 +2,13 @@
     <div class="t-shirt-card <%= 't-shirt-hidden' if t_shirt.hidden && current_user.admin? %>">
 
         <div class="t-shirt-image">
-            <%= image_tag t_shirt.image_url, alt: t_shirt.name %>
+            <% if t_shirt.image_url.present? %>
+                <%= image_tag t_shirt.image_url, alt: t_shirt.name %>
+            <% else %>
+                <%= image_tag 'placeholder.jpg', alt: t_shirt.name %>
+            <% end %>
         </div>
+
         
         <div class="t-shirt-info">
             <h3 class="t-shirt-name"><%= t_shirt.name %></h3>
@@ -21,6 +26,7 @@
 
         <div>
             <%= button_to "Add to Cart", cart_items_path(t_shirt_id: t_shirt), method: :post %>
+            <%= t_shirt.in_stock? ? " #{t_shirt.stock} In Stock" : "Out of Stock" %>
         </div>
     </div>
 <% end %>

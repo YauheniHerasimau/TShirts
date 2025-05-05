@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_26_195445) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_04_231026) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -84,6 +84,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_26_195445) do
     t.boolean "hidden", default: false
     t.string "available_sizes"
     t.string "color"
+    t.integer "stock", default: 0, null: false
     t.index ["category_id"], name: "index_t_shirts_on_category_id"
   end
 

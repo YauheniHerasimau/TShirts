@@ -53,4 +53,8 @@ class TShirt < ApplicationRecord
   def average_rating
     opinions.average(:rating).to_f.round(1)
   end
+
+  def in_stock?
+    stock > 0
+  end
 end

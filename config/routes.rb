@@ -2,13 +2,15 @@ Rails.application.routes.draw do
   devise_for :users
 
   get "admin/index"
+
   namespace :admin do
-    get "t_shirts/create"
 
     resources :t_shirts do
       member do
         patch :toggle_hidden
         get :toggle_hidden
+        get :adjuct_stock
+        patch :update_stock
       end
       resources :opinions, only: [:create, :destroy]
     end
@@ -16,7 +18,7 @@ Rails.application.routes.draw do
   
   root "t_shirts#index"
 
-  resources :t_shirts, onli: [:index, :show] do
+  resources :t_shirts, only: [:index, :show] do
     resources :opinions, only: [:create, :destroy, :update, :edit]
   end
 

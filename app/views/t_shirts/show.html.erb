@@ -15,6 +15,12 @@
     <p><strong>Color:</strong> <%= @t_shirt.color %></p>
     <p><strong>Description:</strong> <%= @t_shirt.description %></p>
     <p><strong>Category:</strong> <%= @t_shirt.category.name %></p>
+    <p><strong>Pieces in stock:</strong></p>
+    <% if @t_shirt.in_stock? %>
+      <p><%= @t_shirt.stock %> available</p>
+    <% else %>
+      <p>Out of stock</p>
+    <% end %>
     <p><%= button_to "Add to Cart", cart_items_path(t_shirt_id: @t_shirt), method: :post %></p>
     <div>
         <% if @t_shirt.average_rating > 0 %>
