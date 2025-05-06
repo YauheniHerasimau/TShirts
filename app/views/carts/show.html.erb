@@ -24,9 +24,9 @@
               <%= number_to_currency(item.t_shirt.price) %>
             </td>
             <td>
-              <%= form_with(model: item, local: true) do |f| %>
+              <%= form_with(url: checkout_cart_path(item), method: :post) do |f| %>
                 <%= f.number_field :quantity, min: 1, value: item.quantity %>
-                <%= f.submit "Update" %>
+                <%= f.submit "Buy Now" %>
               <% end %>
             </td>
             <td>
@@ -34,9 +34,6 @@
             </td>
             <td>
               <%= button_to "Remove", cart_item_path(item), method: :delete %>
-            </td>
-            <td>
-              <%= button_to "Buy Now", checkout_cart_path, method: :post %>
             </td>
           </tr>
         <% end %>

@@ -7,7 +7,11 @@
   <h1><%= @t_shirt.name %></h1>
   
   <div class="t-shirt-image-large">
-      <%= image_tag @t_shirt.image_url, alt: @t_shirt.name %>
+  <% if @t_shirt.image_url.present? %>
+      <%= image_tag @t_shirt.image_url %>
+  <% else %>
+      <%= image_tag 'placeholder.jpg' %>
+  <% end %>
   </div>
   
   <div>

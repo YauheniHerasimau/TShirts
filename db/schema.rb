@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_04_231026) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_06_123923) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -72,6 +72,26 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_04_231026) do
     t.index ["user_id"], name: "index_opinions_on_user_id"
   end
 
+  create_table "order_items", force: :cascade do |t|
+    t.integer "order_id", null: false
+    t.integer "t_shirt_id", null: false
+    t.integer "quantity"
+    t.decimal "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_order_items_on_order_id"
+    t.index ["t_shirt_id"], name: "index_order_items_on_t_shirt_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.decimal "total_amount"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
   create_table "t_shirts", force: :cascade do |t|
     t.string "name", null: false
     t.text "description", null: false
@@ -119,6 +139,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_04_231026) do
   add_foreign_key "cart_items", "t_shirts"
   add_foreign_key "opinions", "t_shirts"
   add_foreign_key "opinions", "users"
+  add_foreign_key "order_items", "orders"
+  add_foreign_key "order_items", "t_shirts"
+  add_foreign_key "orders", "users"
   add_foreign_key "t_shirts", "categories"
   add_foreign_key "variants", "tshirts"
 end
