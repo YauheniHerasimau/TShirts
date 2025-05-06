@@ -35,6 +35,9 @@
             <td>
               <%= button_to "Remove", cart_item_path(item), method: :delete %>
             </td>
+            <td>
+              <%= button_to "Buy Now", checkout_cart_path, method: :post %>
+            </td>
           </tr>
         <% end %>
       </tbody>

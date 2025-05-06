@@ -54,13 +54,11 @@
               <%= link_to "Edit", edit_admin_t_shirt_path(t_shirt) %>
               <%= button_to "Delete", t_shirt_path(t_shirt), method: :delete %>
               <%= link_to t_shirt.hidden ? "Show" : "Hide", toggle_hidden_admin_t_shirt_path(t_shirt), method: :patch %>
-              <%= button_to "Edit Stock", update_stock_admin_t_shirt_path(t_shirt), method: :patch %>
 
               <%= form_with model: t_shirt, url: update_stock_admin_t_shirt_path(t_shirt), method: :patch, local: true do |f| %>
                 <%= t_shirt.in_stock? ? " #{t_shirt.stock} In Stock" : "Out of Stock" %>
-                <%= f.number_field :stock, value: t_shirt.stock, min: 0 %>
-                <%= f.submit "Update Stock" %>
-  
+                <%= f.number_field :stock, value: 0 %>
+                <%= f.submit "Add to Stock" %>
               <% end %>
 
               <hr>

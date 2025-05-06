@@ -66,8 +66,11 @@ module Admin
 
     def update_stock
       @t_shirt = TShirt.find(params[:id])
-      stock_change = params[:stock].to_i
-      @t_shirt.update(stock: @t_shirt.stock.to_i + stock_change)
+      current_stock = @t_shirt.stock || 0
+      additional_stock = stock_params[:stock].to_i
+      total_stock = current_stock + additional_stock
+      @t_shirt.update(stock: total_stock)
+      redirect_back(fallback_location: admin_t_shirts_path)
     end
     
     private
@@ -78,6 +81,10 @@ module Admin
 
     def set_t_shirt
       @t_shirt = TShirt.find(params[:id])
+    end
+
+    def stock_params
+      params.require(:t_shirt).permit(:stock)
     end
   end
 end

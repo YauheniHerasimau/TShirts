@@ -57,4 +57,13 @@ class TShirt < ApplicationRecord
   def in_stock?
     stock > 0
   end
+
+  def reduce_stock(quantity)
+    if self.stock >= quantity
+      update(stock: stock - quantity)
+      true
+    else
+      false
+    end
+  end
 end
