@@ -21,9 +21,12 @@ class TShirtsController < ApplicationController
 
     def destroy
         @t_shirt = TShirt.find(params[:id])
+
+        CartItem.where(t_shirt_id: @t_shirt.id).destroy_all
+        @t_shirt.opinions.destroy_all
         @t_shirt.destroy
 
-        redirect_to root_path
+        redirect_to t_shirts_path
     end
 
     def edit
@@ -39,6 +42,6 @@ class TShirtsController < ApplicationController
     private
 
     def t_shirt_params
-        params.require(:t_shirt).permit(:name, :description, :price, :category_id, :image_url, :size, :color)
+        params.require(:t_shirt).permit(:name, :description, :price, :category_id, :image_url, :size, :color, :stock)
     end
 end

@@ -4,11 +4,20 @@ class CartItemsController < ApplicationController
   before_action :set_cart_item, only: [:update, :destroy]
 
   def create
+    @cart = Cart.find(session[:cart_id])
     t_shirt = TShirt.find(params[:t_shirt_id])
-    @cart_item = @cart.add_t_shirt(t_shirt)
-
-    redirect_to cart_path(@cart)
+    
+    cart_item = @cart.cart_items.find_by(t_shirt_id: t_shirt.id)
+    
+    if cart_item
+      cart_item.update(quantity: cart_item.quantity + 1)
+    else
+      @cart.cart_items.create(t_shirt: t_shirt, quantity: 1)
+    end
+    
+    redirect_to cart_path
   end
+  
 
   def update
     @cart_item.update(cart_item_params)

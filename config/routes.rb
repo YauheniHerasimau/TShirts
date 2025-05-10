@@ -4,9 +4,9 @@ Rails.application.routes.draw do
   get "admin/index"
 
   namespace :admin do
-
     resources :t_shirts do
       member do
+        delete :destroy
         patch :toggle_hidden
         get :toggle_hidden
         get :adjuct_stock
@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   
   root "t_shirts#index"
 
-  resources :t_shirts, only: [:index, :show] do
+  resources :t_shirts do
     resources :opinions, only: [:create, :destroy, :update, :edit]
   end
 

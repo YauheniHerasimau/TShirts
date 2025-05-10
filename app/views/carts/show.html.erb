@@ -15,25 +15,26 @@
         </tr>
       </thead>
       <tbody>
-        <% @cart.cart_items.each do |item| %>
+        <% @cart.cart_items.each do |cart_item| %>
           <tr>
             <td>
-              <%= item.t_shirt.name %>
+              <%= cart_item.t_shirt.name %>
             </td>
             <td>
-              <%= number_to_currency(item.t_shirt.price) %>
+              <%= number_to_currency(cart_item.t_shirt.price) %>
             </td>
             <td>
-              <%= form_with(url: checkout_cart_path(item), method: :post) do |f| %>
-                <%= f.number_field :quantity, min: 1, value: item.quantity %>
-                <%= f.submit "Buy Now" %>
+              <%= form_with model: cart_item, method: :patch do |f| %>
+                <%= f.number_field :quantity, min: 1, value: cart_item.quantity %>
+                <%= f.submit "Update" %>
               <% end %>
             </td>
             <td>
-              <%= number_to_currency(item.total_price) %>
+              <%= number_to_currency(cart_item.total_price) %>
             </td>
             <td>
-              <%= button_to "Remove", cart_item_path(item), method: :delete %>
+              <%= button_to "Buy Now", checkout_cart_path(cart_item), method: :post %>
+              <%= button_to "Remove", cart_item_path(cart_item), method: :delete %>
             </td>
           </tr>
         <% end %>

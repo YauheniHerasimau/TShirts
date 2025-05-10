@@ -20,9 +20,7 @@
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-  </head>
 
-  <body>
     <div class="header">
       <div class="header-content">
         <% if user_signed_in? %>
@@ -54,9 +52,22 @@
       <% end %>
       </div>
     </div>
+  </head>
+
+  <body>
+    <% if flash[:notice] %>
+      <div class="alert alert-success">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+    
+    <% if flash[:alert] %>
+      <div class="alert alert-danger">
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
 
     <div class="home-button"><%= button_to "Home", root_path, method: :get %></div>
-  </head>
 
     <%= yield %>
   </body>

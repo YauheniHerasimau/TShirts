@@ -18,11 +18,16 @@ class CartsController < ApplicationController
     cart_items.each do |cart_item|
       t_shirt = cart_item.t_shirt
       if t_shirt.stock >= cart_item.quantity
-        cart_item.t_shirt.reduce_stock(cart_item.quantity)
+        t_shirt.reduce_stock(cart_item.quantity)
       else
-        #redirect_to cart_path
+        flash[:notice] = "Not enough stock for #{t_shirt.name}. Please adjust your cart."
+        redirect_to cart_path
+        return
       end
     end
+
+    @cart.cart_items.destroy_all
+    redirect_to root_path
 
   end  
 end
