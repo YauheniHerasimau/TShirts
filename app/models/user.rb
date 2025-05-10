@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   has_many :opinions, dependent: :destroy
   has_many :orders
-
+  has_many :messages, dependent: :destroy
   def admin?
     admin == true
   end

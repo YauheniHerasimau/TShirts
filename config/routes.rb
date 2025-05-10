@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get "messages/new"
+  get "messages/create"
+  get "messages/index"
+  get "messages/show"
   devise_for :users
 
   get "admin/index"
@@ -14,6 +18,7 @@ Rails.application.routes.draw do
       end
       resources :opinions, only: [:create, :destroy]
     end
+    resources :messages, only: [:index, :show, :update]
   end
   
   root "t_shirts#index"
@@ -24,6 +29,7 @@ Rails.application.routes.draw do
 
   resources :cart_items, only: [:create, :update, :destroy]
   resource :cart, only: [:show, :destroy]
+  resources :messages, only: [:new, :create, :index, :show]
 
   resources :carts do
     member do

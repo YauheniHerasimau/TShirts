@@ -1,0 +1,14 @@
+<h1>Contact with us</h1>
+
+<%= form_with model: @message, local: true do |f| %>
+
+  <div>
+    <%= f.label :body, "Your Message" %>
+    <%= f.text_area :body, rows: 5 %>
+  </div>
+
+  <div>
+    <%= f.submit "Send Message" %>
+  </div>
+
+<% end %>

@@ -1,0 +1,28 @@
+<h1>Message Details</h1>
+
+<div>
+  <div>
+    Sent on <%= @message.created_at.strftime("%B %d, %Y at %I:%M %p") %>
+  </div>
+  <div>
+    <h5>Your Message:</h5>
+    <p><%= simple_format(@message.body) %></p>
+  </div>
+</div>
+
+<% if @message.admin_reply.present? %>
+  <div>
+    <div>
+      Admin Reply (received on <%= @message.replied_at.strftime("%B %d, %Y at %I:%M %p") %>)
+    </div>
+    <div>
+      <p><%= simple_format(@message.admin_reply) %></p>
+    </div>
+  </div>
+<% else %>
+  <div>
+    Admin has not replied yet. Please check back later.
+  </div>
+<% end %>
+
+<%= link_to "Back to Messages", messages_path %>
