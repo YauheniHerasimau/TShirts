@@ -5,4 +5,5 @@ class Message < ApplicationRecord
 
   scope :unread, -> { where(read: false) }
   scope :read, -> { where(read: true) }
+  scope :recent, -> { order(created_at: :desc) }
 end

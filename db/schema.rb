@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_10_223648) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_13_211501) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -64,7 +64,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_10_223648) do
   create_table "messages", force: :cascade do |t|
     t.integer "user_id", null: false
     t.text "body"
-    t.boolean "read"
+    t.boolean "read", default: false
     t.text "admin_reply"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

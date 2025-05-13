@@ -13,7 +13,7 @@
 <% if @message.admin_reply.present? %>
   <div>
     <div>
-      Admin Reply (received on <%= @message.replied_at.strftime("%B %d, %Y at %I:%M %p") %>)
+      Admin Reply (received on <%= @message.created_at.strftime("%B %d, %Y at %I:%M %p") %>)
     </div>
     <div>
       <p><%= simple_format(@message.admin_reply) %></p>

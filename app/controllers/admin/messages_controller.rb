@@ -5,11 +5,13 @@ class Admin::MessagesController < ApplicationController
   before_action :set_message, only: [:show, :update]
 
   def index
-    @unread_messages = Message.unread
-    @read_messages = Message.where(read: true)
+    @unread_messages = Message.unread.recent
+    @read_messages = Message.read.recent
+    @messages = Message.recent
   end
 
   def show
+    @message = Message.find(params[:id])
     @message.update(read: true) unless @message.read
   end
 

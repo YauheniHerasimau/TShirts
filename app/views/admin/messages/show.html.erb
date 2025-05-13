@@ -13,11 +13,11 @@
 <%= form_with model: [:admin, @message], local: true do |f| %>
   <div>
     <%= f.label :admin_reply, "Your Reply" %>
-    <%= f.text_area :admin_reply, cla, rows: 5 %>
+    <%= f.text_area :admin_reply, rows: 5 %>
   </div>
 
   <div>
-    <%= f.submit "Send Reply", class: %>
+    <%= f.submit "Send Reply" %>
   </div>
 <% end %>
 

@@ -12,6 +12,7 @@
         </div>
         <p><%= truncate(message.body, length: 100) %></p>
         <%= link_to "View and Reply", admin_message_path(message)%>
+        <hr>
       </div>
     <% end %>
   </div>
@@ -35,6 +36,8 @@
           <span>No Reply Yet</span>
         <% end %>
         <%= link_to "View Details", admin_message_path(message) %>
+        <small>Your Reply: <%= message.admin_reply %></small>
+        <hr>
       </div>
     <% end %>
   </div>
