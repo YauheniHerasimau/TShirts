@@ -22,4 +22,8 @@ class Cart < ApplicationRecord
     def total_items
         cart_items.sum(:quantity)
     end
+
+    def paid?
+        payment_status == 'succeeded'
+    end
 end

@@ -53,4 +53,23 @@
       <%= button_to "Empty Cart", cart_path, method: :delete %>
     </div>
   <% end %>
+
+<% if @cart.paid? %>
+  <div class="alert alert-success">
+    <h4>Payment Completed</h4>
+    <p>
+      This cart was paid successfully
+      <% if @cart.card_brand && @cart.card_last4 %>
+        using <%= @cart.card_brand.titleize %> card ending in <%= @cart.card_last4 %>
+      <% end %>
+    </p>
+  </div>
+<% else %>
+  <div>
+    <h4>Ready to Checkout?</h4>
+    <p>Proceed to payment to complete your purchase.</p>
+    <%= link_to "Checkout", pay_cart_path %>
+  </div>
+<% end %>
+
 </div>

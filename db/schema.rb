@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_13_211501) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_15_222222) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -52,6 +52,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_13_211501) do
   create_table "carts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "stripe_id"
+    t.string "payment_status"
+    t.string "card_brand"
+    t.string "card_last4"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -99,7 +103,24 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_13_211501) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "stripe_id"
+    t.string "payment_status"
+    t.string "card_brand"
+    t.string "card_last4"
     t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.integer "order_id", null: false
+    t.decimal "amount", precision: 10, scale: 2, null: false
+    t.string "stripe_id"
+    t.string "status", default: "pending"
+    t.string "payment_method"
+    t.string "card_brand"
+    t.string "card_last4"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_payments_on_order_id"
   end
 
   create_table "t_shirts", force: :cascade do |t|
@@ -153,6 +174,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_13_211501) do
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "t_shirts"
   add_foreign_key "orders", "users"
+  add_foreign_key "payments", "orders"
   add_foreign_key "t_shirts", "categories"
   add_foreign_key "variants", "tshirts"
 end

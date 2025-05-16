@@ -13,4 +13,8 @@ class CartItem < ApplicationRecord
   def set_default_quantity
     self.quantity ||= 1
   end
+
+  def subtotal
+    t_shirt.price * quantity
+  end
 end
