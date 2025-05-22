@@ -37,10 +37,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :cart do
-    get :pay
-    get :process_payment
-    get :payment_success
+  resource :cart, only: [:show, :destroy, :update] do
+    get 'pay'
+    post 'process_payment'
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

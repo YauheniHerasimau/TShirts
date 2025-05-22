@@ -13,33 +13,47 @@
         <th>Subtotal</th>
         </tr>
     </thead>
-    <tbody>
-        <% @cart.cart_items.each do |item| %>
-        <tr>
-            <td><%= item.t_shirt.name %></td>
-            <td><%= item.quantity %></td>
-            <td><%= number_to_currency(item.t_shirt.price) %></td>
-
-        </tr>
-        <% end %>
-        <tr>
-        <td><strong>Total:</strong></td>
-        <td><strong><%= number_to_currency(@cart.total_price) %></strong></td>
-        </tr>
-    </tbody>
+        <tbody>
+            <% @cart.cart_items.each do |item| %>
+            <tr>
+                <td><%= item.t_shirt.name %></td>
+                <td><%= item.quantity %></td>
+                <td><%= number_to_currency(item.t_shirt.price) %></td>
+                <td><%= number_to_currency(item.t_shirt.price * item.quantity) %></td>
+            </tr>
+            <% end %>
+            <tr>
+            <td><strong>Total:</strong></td>
+            <td><strong><%= number_to_currency(@cart.total_price) %></strong></td>
+            </tr>
+        </tbody>
     </table>
     
     <hr>
+            
+    <button> <%= link_to "Back to Cart", cart_path %></button>
     
     <h4>Payment Information</h4>
     
-    <form id="payment-form">
-    <div id="payment-element">
-        <!-- Stripe Elements will be inserted here -->
-    </div>
-    <button id="submit-button">
-        Pay <%= number_to_currency(@cart.total_price) %>
-    </button>
-    <div id="payment-message"></div>
+    <form>
+        <%= form_tag process_payment_cart_path do %>
+            <article>
+                <% if flash[:error].present? %>
+                    <div>
+                        <p><%= flash[:error] %></p>
+                    </div>
+                <% end %>
+            </article>
+
+            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+                data-description="Order #<%= @cart.id %>"
+                data-amount="<%= @amount %>"
+                data-locale="auto"
+                data-email="<%= current_user.email if current_user %>"
+                data-currency="usd"
+                data-label="Pay with Card">
+            </script>
+        <% end %>
     </form>
 </div>

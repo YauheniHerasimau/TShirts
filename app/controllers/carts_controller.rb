@@ -31,35 +31,45 @@ class CartsController < ApplicationController
   end  
   def pay
     @cart = current_cart
+    @amount = (@cart.total_price * 100).to_i
+
+    @payment_intent = Stripe::PaymentIntent.create({
+      amount: @amount,
+      currency: 'usd',
+      metadata: {
+        cart_id: @cart.id
+      }
+    })
     
-    redirect_to @cart, notice: "This cart has already been paid." and return if @cart.paid?
+    @client_secret = @payment_intent.client_secret
   end
 
   def process_payment
     @cart = current_cart
-    
-    redirect_to @cart, notice: "This cart has already been paid." and return if @cart.paid?
+    payment_intent_id = params[:payment_intent_id]
     
     begin
-      payment_intent = Stripe::PaymentIntent.create({
-        amount: (@cart.total_price * 100).to_i, # Stripe expects amount in cents
-        currency: 'usd',
-        payment_method_types: ['card'],
-        description: "Cart ##{@cart.id}",
-        metadata: {
-          cart_id: @cart.id,
-          user_id: current_user&.id
-        }
-      })
-      
-      @cart.update(stripe_id: payment_intent.id)
-      
-      render json: { 
-        clientSecret: payment_intent.client_secret,
-        cart_id: @cart.id
-      }
-    rescue Stripe::StripeError => e
-      render json: { error: e.message }, status: :unprocessable_entity
+      payment_intent = Stripe::PaymentIntent.retrieve(payment_intent_id)
+
+        @order = Order.create!(
+          user: current_user,
+          total_amount: @cart.total_price,
+          status: 'paid',
+          payment_id: payment_intent_id
+        )
+        
+        @cart.cart_items.each do |cart_item|
+          OrderItem.create!(
+            order: @order,
+            product: cart_item.product,
+            quantity: cart_item.quantity,
+            price: cart_item.product.price
+          )
+        end
+        
+        # Empty the cart
+        @cart.cart_items.destroy_all
+        redirect_to root_path, notice: 'Payment successful! Your order has been processed.'
     end
   end
 
