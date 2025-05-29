@@ -21,6 +21,7 @@ gem "active_storage_validations"
 
 gem "stripe"
 
+
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
 
@@ -58,6 +59,11 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+  gem "capistrano", require: false
+  gem "capistrano-rails", require: false
+  gem 'capistrano-rvm', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano3-puma', require: false
 end
 
 group :test do
