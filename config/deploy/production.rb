@@ -20,6 +20,7 @@ server "16.171.236.186", user: "ubuntu", roles: %w{app}
 role :app, %w{ubuntu@16.171.236.186}
 
 set :migration_role, :app
+set :puma_role, :app
 set :migration_servers, -> { primary(fetch(:migration_role)) }
 
 set :assets_roles, :app
