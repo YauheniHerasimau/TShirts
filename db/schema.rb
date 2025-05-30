@@ -153,17 +153,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_15_222222) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "variants", force: :cascade do |t|
-    t.integer "tshirt_id", null: false
-    t.string "color"
-    t.string "size"
-    t.integer "stock"
-    t.decimal "price"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["tshirt_id"], name: "index_variants_on_tshirt_id"
-  end
-
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "cart_items", "carts"
@@ -176,5 +165,4 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_15_222222) do
   add_foreign_key "orders", "users"
   add_foreign_key "payments", "orders"
   add_foreign_key "t_shirts", "categories"
-  add_foreign_key "variants", "tshirts"
 end
